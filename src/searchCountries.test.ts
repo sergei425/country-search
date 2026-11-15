@@ -21,27 +21,38 @@ describe('searchCountries', () => {
 
     expect(mockFetch).toHaveBeenCalledTimes(1);
     const [calledUrl, calledOptions] = mockFetch.mock.calls[0] as [string, RequestInit];
-    expect(calledUrl).toContain('South%20Africa');
+    expect(calledUrl).toBe('https://countries.dev/name/South%20Africa');
     expect(calledOptions.signal).toBe(controller.signal);
     expect(result).toEqual(mockCountries);
   });
 
-  it('throws HttpError when response.ok is false (e.g. 404 or 500)', async () => {
+  it('returns an empty array when API responds with 404 (no matches found)', async () => {
     const mockFetch = vi.fn().mockResolvedValue({
       ok: false,
       status: 404,
-      statusText: 'Not Found',
       json: async () => ({ message: 'Not Found' }),
     });
     vi.stubGlobal('fetch', mockFetch);
 
-    await expect(searchCountries('UnknownCountry')).rejects.toThrow(HttpError);
-    await expect(searchCountries('UnknownCountry')).rejects.toMatchObject({
-      status: 404,
+    const result = await searchCountries('UnknownCountry');
+    expect(result).toEqual([]);
+  });
+
+  it('throws HttpError when response.ok is false and status is not 404 (e.g. 500)', async () => {
+    const mockFetch = vi.fn().mockResolvedValue({
+      ok: false,
+      status: 500,
+      json: async () => ({ message: 'Internal Server Error' }),
+    });
+    vi.stubGlobal('fetch', mockFetch);
+
+    await expect(searchCountries('Germany')).rejects.toThrow(HttpError);
+    await expect(searchCountries('Germany')).rejects.toMatchObject({
+      status: 500,
     });
   });
 
-  it('propagates AbortError when fetch is aborted via signal', async () => {
+  it('propagates AbortError when request is aborted via signal', async () => {
     const abortError = new DOMException('The operation was aborted', 'AbortError');
     const mockFetch = vi.fn().mockRejectedValue(abortError);
     vi.stubGlobal('fetch', mockFetch);
