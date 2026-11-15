@@ -34,12 +34,12 @@ describe('mapCountryResponse', () => {
 
     expect(mapCountryResponse(minimalDto)).toEqual({
       name: 'Antarctica',
-      capital: 'Нет данных',
-      region: 'Не указан',
+      capital: 'No data',
+      region: 'Not specified',
       population: 0,
       flagUrl: '',
-      currencies: 'Нет данных',
-      languages: 'Нет данных',
+      currencies: 'No data',
+      languages: 'No data',
     });
   });
 
