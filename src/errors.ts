@@ -7,3 +7,21 @@ export class HttpError extends Error {
     this.status = status;
   }
 }
+
+export type AppErrorKind = 'abort' | 'timeout' | 'http' | 'network';
+
+export interface ClassifiedError {
+  kind: AppErrorKind;
+  message: string;
+  canRetry: boolean;
+  status?: number;
+}
+
+export function classifyError(error: unknown): ClassifiedError {
+  void error;
+  return {
+    kind: 'network',
+    message: '',
+    canRetry: false,
+  };
+}
