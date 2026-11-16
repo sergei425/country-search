@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && node -e \"const fs = require('node:fs'); fs.copyFileSync('style.css', 'dist/style.css'); const html = fs.readFileSync('index.html', 'utf8').replace('./dist/main.js', './main.js'); fs.writeFileSync('dist/index.html', html);\"",
+    "deploy": "gh-pages -d dist",
     "watch": "tsc --watch",
     "lint": "eslint .",
     "format": "prettier --write .",
@@ -38,6 +39,7 @@
     "eslint": "^10.15.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.7",
+    "gh-pages": "^6.3.0",
     "globals": "^17.14.0",
     "husky": "^9.1.7",
     "jsdom": "^29.1.1",
