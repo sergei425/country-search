@@ -1,0 +1,134 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  width: 100%;
+  height: auto;
+  object-fit: fill;
+}
+
+body {
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
+  line-height: 1.5;
+  padding: 20px;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+
+  h1 {
+    text-align: center;
+    line-height: 2rem;
+    margin-bottom: 34px;
+  }
+
+  .search-input {
+    padding: 12px 24px;
+    margin-bottom: 45px;
+    border: 3px solid #343434;
+    border-radius: 12px;
+  }
+}
+
+.results-grid {
+  max-width: 100vw;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+.country-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  background-color: rgb(240, 223, 202);
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.modal-overlay {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(20, 19, 17, 0.8);
+  z-index: 22;
+}
+
+.modal-content {
+  position: relative;
+  width: 342px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 55px 16px 16px;
+  background-color: #ebeec4;
+  border-radius: 40px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 23px;
+  right: 23px;
+  padding: 4px 13px;
+  border-radius: 100px;
+  border: 1px solid #343434;
+  background-color: transparent;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 150%;
+  transition: all 0.3s;
+
+  &:hover {
+    background-color: #665f55;
+    color: #e1d4c9;
+  }
+}
+
+.country-details {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 12px 24px;
+  align-items: baseline;
+
+  dt {
+    font-weight: 600;
+    color: #666;
+  }
+
+  dd {
+    margin: 0;
+    color: #111;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .modal-content {
+    width: 550px;
+    gap: 20px;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .modal-content {
+    width: 700px;
+  }
+}
